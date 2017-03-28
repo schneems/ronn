@@ -30,6 +30,10 @@
 #/
 #/ A <file> named example.1.ronn generates example.1.html (HTML manpage)
 #/ and example.1 (roff manpage) by default.
+
+
+puts "== LOADING FILE #{__FILE__}"
+
 require 'date'
 require 'optparse'
 
@@ -48,6 +52,10 @@ begin
   require 'hpricot'
   require 'ronn'
 rescue LoadError => boom
+  puts "========== ERROR =========="
+  puts boom.inspect
+  puts boom.to_s =~ /ronn/
+
   if boom.to_s =~ /ronn/
     libdir = File.expand_path("../../lib", __FILE__).sub(%r|^#{Dir.pwd}/|, './')
     if File.directory?(libdir) && !$:.include?(libdir)
